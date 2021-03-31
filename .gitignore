@@ -1,0 +1,14 @@
+dist
+*_env/
+__pycache__/
+node_modules/
+.quasar/
+src-ssr/
+.vagrant
+docker-compose.yml
+env/.env.dev
+env/.env.prod
+env/.env.db
+.vscode/settings.json
+sqlite.db
+.djengu/.production_toolbox/caddy/Caddyfile

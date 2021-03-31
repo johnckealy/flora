@@ -1,0 +1,60 @@
+
+version: "3.5"
+
+# External network
+networks:
+    ${DOCKER_NETWORK_NAME}:
+        external: true
+
+volumes:
+    postgres_data:
+
+
+services:
+
+    # Django app
+    django:
+        restart: always
+        build:
+            context: ${ROOT_FOLDER}/api
+            dockerfile: ${ROOT_FOLDER}/api/Dockerfile
+        expose:
+            - ${DJANGO_PORT}
+        environment:
+            - url=${API_URL}
+        command:
+            "gunicorn config.wsgi:application --bind 0.0.0.0:${DJANGO_PORT}"
+        env_file:
+            - ${ROOT_FOLDER}/env/.env.${ENVIRONMENT}
+        depends_on:
+            - db
+        networks:
+            - ${DOCKER_NETWORK_NAME}
+
+
+    # Django database
+    db:
+        restart: always
+        image: postgres:12.0-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - ${ROOT_FOLDER}/env/.env.db
+        networks:
+            - ${DOCKER_NETWORK_NAME}
+
+    # Nuxt frontend app
+    quasar:
+        build: ${ROOT_FOLDER}/frontend/
+        ports:
+            - "${PORT}:${PORT}"
+        environment:
+            - url=${ORIGIN_URL}
+        volumes:
+            - ./frontend:/var/lib/frontend
+        command:
+            bash -c "cd dist/ssr/ && PORT=${PORT} npm run start"
+        env_file:
+            - ./env/.env.${ENVIRONMENT}
+        networks:
+            - ${DOCKER_NETWORK_NAME}
