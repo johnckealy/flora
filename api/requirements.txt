@@ -14,4 +14,7 @@ whitenoise
 pytest-django
 django-extensions
 django-sslserver
-
+celery==4.4.7
+redis
+django-celery-beat
+django-celery-results

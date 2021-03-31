@@ -13,6 +13,7 @@ $lg-breakpoint: 1920px;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+  padding: 20px;
 }
 
 @media (min-width: $xs-breakpoint) {
@@ -53,3 +54,4 @@ $lg-breakpoint: 1920px;
 a {
   text-decoration: none;
 }
+

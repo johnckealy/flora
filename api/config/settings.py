@@ -23,16 +23,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'corsheaders',
-    'dj_rest_auth',
     'rest_framework',
     'rest_framework.authtoken',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'dj_rest_auth.registration',
+    'django_celery_beat',
+    'django_celery_results',
     "sslserver",
     'users',
+    'plants'
 ]
 
 MIDDLEWARE = [
