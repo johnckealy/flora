@@ -5,8 +5,6 @@ DJANGO_MANAGE=api/manage.py
 ENV_DIR=.$(PYTHON)_env
 IN_ENV=. $(ENV_DIR)/bin/activate
 
-all:
-	@./.djengu/create.sh
 
 build-dev: env-dev build-python migrations run-django-scripts
 	cd frontend && npm i

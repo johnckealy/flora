@@ -24,11 +24,11 @@ export default {
     this.$q.notify.setDefaults({
       color: "green-4",
       textColor: "white",
-      icon: "cloud_done",
+      icon: "mdi-cloud-check",
       message: "Successful",
       position: "bottom-right",
       timeout: 2000,
-      actions: [{ icon: "close", color: "white" }],
+      actions: [{ icon: "mdi-close", color: "white" }],
     });
   },
 };

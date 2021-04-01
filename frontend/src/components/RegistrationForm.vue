@@ -56,7 +56,7 @@
 
        <div v-if="errorMessages" class="text-body1 text-red">
           <p v-for="(message,i) in errorMessages" :key="i" >
-            <q-icon color="red" size="18px" name="error_outline" />
+            <q-icon color="red" size="18px" name="mdi-alert-outline-outline" />
             {{ message }}
           </p>
         </div>

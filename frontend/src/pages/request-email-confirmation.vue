@@ -2,7 +2,7 @@
   <div class="row">
     <div class="absolute-center col-md-3 col-12 q-ma-lg q-mx-auto">
       <h1 class="text-h4">
-        <q-icon name="mail_outline" />
+        <q-icon name="mdi-mail-outline" />
         We just need you to confirm your email address.</h1>
       <h2 class="text-subtitle1">Please open your email and click the confirm link from us.</h2>
       <div class="row q-ma-lg">
@@ -20,7 +20,7 @@
 
     <div v-if="errorMessages" class="text-body1 text-red">
       <p v-for="(message,i) in errorMessages" :key="i" >
-        <q-icon color="red" size="18px" name="error_outline" />
+        <q-icon color="red" size="18px" name="mdi-alert-outline-outline" />
         {{ message }}
       </p>
     </div>
@@ -45,7 +45,7 @@ export default {
         this.$q.notify({
           message: "There was an issue re-sending the registration email!",
           color: "red-6",
-          icon: "error",
+          icon: "mdi-alert-outline",
         })
       }
       this.loading = false;

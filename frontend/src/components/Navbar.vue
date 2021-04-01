@@ -8,10 +8,10 @@
 
     <span class="text-h6 q-mx-sm">{{ authUser ? authUser.first_name : "" }}</span>
     <q-space />
-    <q-btn v-if="!authUser" to="/login" icon="error" class="q-ma-md" no-caps flat dense>
+    <q-btn v-if="!authUser" to="/login" icon="mdi-account" class="q-ma-md" no-caps flat dense>
       <span class="text-h6 q-mx-sm">Login</span>
     </q-btn>
-    <q-btn v-else @click="logout" icon="logout" class="q-ma-md" no-caps flat dense
+    <q-btn v-else @click="logout" icon="mdi-logout" class="q-ma-md" no-caps flat dense
       ><span class="text-h6 q-mx-sm">Logout</span>
     </q-btn>
   </q-toolbar>
@@ -31,7 +31,7 @@ export default {
         this.$q.notify({
           message: "There was a problem logging out.",
           color: "red-6",
-          icon: "error",
+          icon: "mdi-alert-outline",
         });
       }
     },
