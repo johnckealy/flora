@@ -12,7 +12,7 @@ module.exports = function (/* ctx */) {
 
     extras: [
       'roboto-font',
-      'material-icons'
+      'svg-mdi-v5'
     ],
 
     build: {
@@ -36,7 +36,7 @@ module.exports = function (/* ctx */) {
     },
 
     framework: {
-      iconSet: 'material-icons',
+      iconSet: 'svg-mdi-v5',
       lang: 'en-us',
       config: {},
       importStrategy: 'auto',

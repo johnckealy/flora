@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column flex-center">
-    <img alt="Djengu logo" src="~assets/djengu-logo.svg" width="400px" />
+    <img alt="Djengu logo" src="~assets/logo.png" width="400px" />
     <h6>Welcome {{ authUserName }}! </h6>
       <p>You are logged in. You can use this page for authenticated actions. </p>
   </q-page>

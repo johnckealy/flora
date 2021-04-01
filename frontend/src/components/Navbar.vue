@@ -1,14 +1,14 @@
 <template>
-  <q-toolbar>
+  <q-toolbar class="bg-secondary">
     <router-link to="/">
-      <q-avatar @click="$router.push('/')">
-        <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-      </q-avatar>
+      <div @click="$router.push('/')">
+        <img alt="logo" src="~assets/icon-white.svg" width="50px" />
+      </div>
     </router-link>
 
     <span class="text-h6 q-mx-sm">{{ authUser ? authUser.first_name : "" }}</span>
     <q-space />
-    <q-btn v-if="!authUser" to="/login" icon="person" class="q-ma-md" no-caps flat dense>
+    <q-btn v-if="!authUser" to="/login" icon="error" class="q-ma-md" no-caps flat dense>
       <span class="text-h6 q-mx-sm">Login</span>
     </q-btn>
     <q-btn v-else @click="logout" icon="logout" class="q-ma-md" no-caps flat dense
