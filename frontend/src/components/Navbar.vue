@@ -40,8 +40,8 @@ export default {
     },
   },
   computed: {
-    async authUser() {
-      return await this.$auth.user();
+    authUser() {
+      return this.$auth.user();
     },
   },
 };

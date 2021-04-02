@@ -15,9 +15,16 @@ app.conf.beat_scheduler = 'django_celery_beat.schedulers.DatabaseScheduler'
 
 
 app.conf.beat_schedule = {
-    'test_script': {
-        'task': 'query_jobsites',
-        'schedule': 20.0,
+    'sync_script': {
+        'task': 'sync_plants',
+        # 'schedule': 84600.0,
+        'schedule': 60.0,
         'args': ()
-    }
+    },
+    'integration_script': {
+        'task': 'integration',
+        'schedule': 45.0,
+        # 'schedule': 3000.0,
+        'args': ()
+    },
 }

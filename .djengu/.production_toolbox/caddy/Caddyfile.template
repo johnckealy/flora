@@ -7,7 +7,7 @@
 }
 
 ${ORIGIN_DOMAIN} {
-    reverse_proxy quasar:3100
+    reverse_proxy quasar:3400
 }
 www.${ORIGIN_DOMAIN} {
     redir https://${ORIGIN_DOMAIN}{uri} permanent
@@ -15,5 +15,5 @@ www.${ORIGIN_DOMAIN} {
 
 
 ${API_DOMAIN}  {
-    reverse_proxy django:8100
+    reverse_proxy django:8400
 }
