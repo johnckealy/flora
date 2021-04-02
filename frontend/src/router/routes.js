@@ -17,6 +17,11 @@ const routes = [
         component: () => import('pages/history.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: '/add-plants',
+        component: () => import('pages/add-plants.vue'),
+        meta: { requiresAuth: true },
+      },
     ]
   },
   {

@@ -73,7 +73,7 @@ export default {
         this.$router.push(this.$auth.redirectUrl());
       } else {
         this.$q.notify({
-          message: "Registration failed!",
+          message: "Login failed!",
           color: "red-6",
           icon: "mdi-alert-outline",
         });

@@ -3,7 +3,8 @@ module.exports = function (/* ctx */) {
     supportTS: false,
 
     boot: [
-      'auth'
+      'auth',
+      { path: 'plotly', server: false }
     ],
 
     css: [

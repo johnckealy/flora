@@ -12,7 +12,8 @@
     "@quasar/extras": "^1.10.1",
     "core-js": "^3.6.5",
     "quasar": "^1.0.0",
-    "vue-auth-jwt": "^0.4.1"
+    "vue-auth-jwt": "^0.4.1",
+    "vue-plotly": "^1.1.0"
   },
   "devDependencies": {
     "@quasar/app": "^2.0.0"

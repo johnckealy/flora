@@ -8,6 +8,9 @@
 
     <span class="text-h6 q-mx-sm">{{ authUser ? authUser.first_name : "" }}</span>
     <q-space />
+
+    <q-btn to="/add-plants" color="dark">Add a Plant</q-btn>
+
     <q-btn v-if="!authUser" to="/login" icon="mdi-account" class="q-ma-md" no-caps flat dense>
       <span class="text-h6 q-mx-sm">Login</span>
     </q-btn>

@@ -1,12 +1,17 @@
 <template>
-  <q-card class="dialog-card">
-    <!-- <div class="flex items-start"> -->
-    <!-- <q-space /> -->
-    <!-- <q-btn size="25px" icon="mdi-close" flat round dense v-close-popup /> -->
-    <!-- </div> -->
+  <q-card class="dialog-card" style="position: relative">
+    <q-btn
+      class="q-ma-xs fixed"
+      style="z-index: 100"
+      size="15px"
+      icon="mdi-close"
+      round
+      dense
+      v-close-popup
+    />
 
     <div v-if="!loading" class="row">
-      <div class="col-12 col-md-3">
+      <div class="col-12 col-md-2">
         <div>
           <q-img
             width="100%"
@@ -36,31 +41,71 @@
         </div>
       </div>
 
-      <div class="col-md-5 q-pa-lg">
-
-        <div>PLOTLY</div>
-
-        <div v-for="(item, i) in fields" :key="i">
-          <div class="row q-pa-sm items-center">
-            <div class="col-2 flex justify-center">
-              <status-icon
-                :size="'25px'"
-                :clr="dialogData.dialog_status[item.field].color"
-                :ic="item.icon"
-                :tp="item.value"
-              />
-            </div>
-            <div class="col-10 q-px-sm">
-              <span>
-                {{ dialogData.dialog_status[item.field].message }}
-              </span>
+      <div class="col-md-5 col-12 q-pa-lg">
+        <div class="row">
+          <div class="col-12" style="height: 20em">
+            <q-no-ssr>
+              <plotly-graph :link="link" :dialogData="dialogData" />
+            </q-no-ssr>
+          </div>
+          <div class="col-12 q-pt-lg">
+            <div v-for="(item, i) in fields" :key="i">
+              <div class="row q-pa-sm items-center">
+                <div class="col-2 flex justify-center">
+                  <status-icon
+                    :size="'25px'"
+                    :clr="dialogData.dialog_status[item.field].color"
+                    :ic="item.icon"
+                    :tp="item.value"
+                  />
+                </div>
+                <div class="col-10 q-px-sm">
+                  <span>
+                    {{ dialogData.dialog_status[item.field].message }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
-      <div class="col-md-4">
-        <div>PLANT</div>
+
+      <div class="col-md-5 col-12">
+        <div class="row q-ma-md">
+          <div class="col-3 col-md-4">
+            <q-img src="~assets/plant-backdrop.jpg" height="100%" />
+          </div>
+          <div class="col-9 col-md-8 q-pa-md">
+            <h6 class="text-h4 roman q-my-sm">
+              {{ dialogData.nickname }} is a {{ dialogData.plant_name }}
+            </h6>
+            <span class="text-subtitle1 text-grey-9 text-italic q-my-lg">
+              {{ dialogData.scientific_name }}</span
+            >
+          </div>
+        </div>
+        <div class="row q-ma-md">
+          <div class="roman q-pb-lg text-h6 col-12">
+            {{ dialogData.description }}
+          </div>
+          <div
+            v-for="(feature, i) in features"
+            :key="i"
+            class="col-12 text-subtitle1 q-pa-sm"
+          >
+            <div class="row text-subtitle2">
+              <div class="col-1 text-grey-8">
+                <q-icon size="22px" :name="feature.icon" />
+              </div>
+              <div class="col-3 text-grey-8 ">
+                {{ feature.fieldText }}
+              </div>
+              <div class="col-8 q-pl-lg">
+                {{ dialogData[feature.field] }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -71,15 +116,38 @@
 </template>
 
 <script>
+import PlotlyGraph from "./PlotlyGraph.vue";
 import StatusIcon from "./StatusIcon.vue";
 export default {
-  components: { StatusIcon },
+  components: { StatusIcon, PlotlyGraph },
   data: () => ({
     dialogData: {},
     loading: false,
     gbtns: ["HUMIDITY (%)", "TEMPERATURE (°F)", "SOIL MOISTURE", "SUN (LUX)"],
     link: "HUMIDITY (%)",
     fields: [],
+    features: [
+      {
+        field: "scientific_name",
+        fieldText: "Scientific Name",
+        icon: "mdi-scale-balance",
+      },
+      {
+        field: "toxicity",
+        fieldText: "Toxicity",
+        icon: "mdi-biohazard",
+      },
+      {
+        field: "sun_requirements",
+        fieldText: "Sun Requirements",
+        icon: "mdi-weather-sunny",
+      },
+      {
+        field: "ideal_soil_type",
+        fieldText: "Ideal Soil Type",
+        icon: "mdi-wall-sconce-round-variant",
+      },
+    ],
   }),
   props: ["device"],
   mounted() {
