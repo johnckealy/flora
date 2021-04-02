@@ -35,7 +35,7 @@
             "envFile": "${workspaceFolder}/env/.env.dev",
             "program": "${workspaceFolder}/api/manage.py",
             "args": [
-                "runscript", "create_test_users"
+                "runscript", "thingspeak_integration"
             ],
             "django": true,
         },

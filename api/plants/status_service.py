@@ -30,33 +30,33 @@ class StatusService:
             if alert_lower:
                 if current_field < alert_lower:
                     self.alerts.append({
-                        "message": f"{self.device.knickname}: {field_name} alert.",
-                        "color": "error",
+                        "message": f"{self.device.nickname}: {field_name} alert.",
+                        "color": "negative",
                         "icon": "alertIcon",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
                     return {
-                        'color': 'error',
+                        'color': 'negative',
                         'message': alerts_copy.alert_lower_copy
                     }
             if alert_upper:
                 if current_field > alert_upper:
                     self.alerts.append({
-                        "message": f"{self.device.knickname}: {field_name} alert.",
-                        "color": "error",
+                        "message": f"{self.device.nickname}: {field_name} alert.",
+                        "color": "negative",
                         "icon": "alertIcon",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
                     return {
-                        'color': 'error',
+                        'color': 'negative',
                         'message': alerts_copy.alert_upper_copy
                     }
             if warning_upper:
                 if current_field > warning_upper:
                     self.alerts.append({
-                        "message": f"{self.device.knickname}: {field_name} issue.",
+                        "message": f"{self.device.nickname}: {field_name} issue.",
                         "color": "warning",
                         "icon": "warningIcon",
                         "date": datetime.now().strftime("%m/%d/%Y")
@@ -69,7 +69,7 @@ class StatusService:
             if warning_lower:
                 if current_field < warning_lower:
                     self.alerts.append({
-                        "message": f"{self.device.knickname}: {field_name} issue.",
+                        "message": f"{self.device.nickname}: {field_name} issue.",
                         "color": "warning",
                         "icon": "warningIcon",
                         "date": datetime.now().strftime("%m/%d/%Y")
@@ -80,7 +80,7 @@ class StatusService:
                         'message': alerts_copy.warning_upper_copy
                     }
             return {
-                'color': 'success',
+                'color': 'accent',
                 'message': f"The {field_name} for the {plant_name} in your {room} is just right!"
             }
         else:
@@ -126,19 +126,19 @@ class StatusService:
         alerts_copy = AlertsCopy.objects.get(field_name='Reservoir ')
         if self.device.current_waterlevel_ok:
             return {
-                'color': 'success',
+                'color': 'accent',
                 'message':  f"The water reservoir for the {self.plant.plant_name} in your {self.device.room} is fine."
             }
         elif self.device.current_waterlevel_ok==False:
             self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
             self.alerts.append({
                 "message": alerts_copy.alert_lower_copy,
-                "color": "error",
+                "color": "negative",
                 "icon": "alertIcon",
                 "date": datetime.now().strftime("%m/%d/%Y")
             })
             return {
-                'color': 'error',
+                'color': 'negative',
                 'message': alerts_copy.alert_lower_copy
             }
 

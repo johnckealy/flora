@@ -50,6 +50,7 @@ frontend-prod-serve: env-prod
 run-django-scripts: env-dev
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript sync_to_airtable
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript thingspeak_integration
+	@$(IN_ENV) && python $(DJANGO_MANAGE) loaddata devices
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript create_test_users
 
 migrations: env-dev

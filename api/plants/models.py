@@ -40,11 +40,10 @@ class Plant(models.Model):
 class Device(models.Model):
     """Devices are the center-piece of the app. Each registered
     device creates an entry in the dashboard."""
-    knickname = models.CharField(max_length=70)
+    nickname = models.CharField(max_length=70)
     room = models.CharField(max_length=70)
     device_id = models.CharField(max_length=70, unique=True)
     airtable_plant_id = models.CharField(max_length=70)
-    plant =  models.ForeignKey(Plant, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     current_temp = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     current_humidity = models.DecimalField(max_digits=4, decimal_places=1, null=True)
@@ -54,7 +53,7 @@ class Device(models.Model):
     image_url = models.CharField(max_length=400, null=True)
 
     def __str__(self):
-        return self.knickname
+        return self.nickname
 
 
 class ReadingHistory(models.Model):

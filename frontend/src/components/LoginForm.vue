@@ -1,9 +1,8 @@
 <template>
   <div class="container">
+    <q-img style="max-width: 300px" src="~assets/logo.png"></q-img>
 
-      <q-img style="max-width: 300px" src="~assets/logo.png"></q-img>
-
-      <div style="padding: 35px 0"></div>
+    <div style="padding: 35px 0"></div>
 
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-input
@@ -40,7 +39,7 @@
 
       <div>
         <q-btn
-          class="q-ml-md full-width q-mx-auto"
+          class="q-ml-md full-width q-py-xs q-mx-auto"
           type="submit"
           color="primary"
           >{{ loading ? "Signing in..." : "Sign in" }}

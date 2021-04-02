@@ -76,7 +76,7 @@ if os.environ.get('ENVIRONMENT') == 'dev':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'sqlite.db'
+            'NAME': '/home/jokea/code/flora/sqlite.db'
         }
     }
 else:

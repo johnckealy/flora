@@ -18,7 +18,7 @@ class DeviceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         device = Device.objects.create(
-            knickname = validated_data['knickname'],
+            nickname = validated_data['nickname'],
             device_id = validated_data['device_id'],
             airtable_plant_id = validated_data['airtable_plant_id'],
             room = validated_data['room'],
@@ -64,7 +64,7 @@ class DashboardInfoSerializer(serializers.Serializer):
     airtable_plant_id = serializers.CharField()
     device_id = serializers.CharField()
     scientific_name = serializers.CharField()
-    knickname = serializers.CharField()
+    nickname = serializers.CharField()
     room = serializers.CharField()
     plant_name = serializers.CharField()
     small_thumbnail_url = serializers.CharField()
@@ -86,7 +86,7 @@ class DialogInfoSerializer(serializers.Serializer):
     scientific_name = serializers.CharField()
     plant_type = serializers.CharField()
     description = serializers.CharField()
-    knickname = serializers.CharField()
+    nickname = serializers.CharField()
     room = serializers.CharField()
     plant_name = serializers.CharField()
     toxicity = serializers.CharField()

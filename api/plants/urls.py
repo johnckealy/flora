@@ -13,7 +13,5 @@ urlpatterns = [
     path('manual_integration/', ManualIntegration.as_view(), name='history_index'),
     path('dashboard_data/', DashboardInfo.as_view(), name='device_detail'),
     path('dialog_data/<str:device_id>/', DialogInfo.as_view(), name='dialogue_detail'),
-
     path('upload/', ImageUploadView.as_view())
-
 ]

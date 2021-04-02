@@ -41,7 +41,7 @@ class ThingSpeakIntegration:
             if int(float(feed['field4'])) != 0:
                 dt = parser.parse(feed['created_at'])
                 if EventHistory.objects.filter(updated_at=dt).count() == 0:
-                    history_entry = EventHistory.objects.create(user=device.user, device=device, message=f"{device.knickname} was watered.")
+                    history_entry = EventHistory.objects.create(user=device.user, device=device, message=f"{device.nickname} was watered.")
                     history_entry.updated_at = dt
                     history_entry.save()
 
@@ -134,7 +134,7 @@ def run():
     devices = Device.objects.all()
     ReadingHistory.objects.all().delete()
     for device in devices:
-        EventHistory.objects.create(user=device.user, device=device, message=f"FlorA updated its data for '{device.knickname}'")
+        EventHistory.objects.create(user=device.user, device=device, message=f"FlorA updated its data for '{device.nickname}'")
         thingspeak = ThingSpeakIntegration(device_id=device.device_id, reading_hist_days=15, averaging_window=1440)
         succeeded = thingspeak.process_device()
         if succeeded:

@@ -37,12 +37,10 @@ class DeviceDetail(generics.GenericAPIView):
     serializer_class = DeviceSerializer
     lookup_field = 'device_id'
 
-
     def get(self, request, pk):
         device =  Device.objects.get(pk=pk)
         serializer = DeviceSerializer(device)
         return Response(serializer.data)
-
 
     def post(self, request):
         if Device.objects.filter(device_id=request.data['device_id']).count() > 0:
@@ -95,7 +93,7 @@ class DashboardInfo(APIView):
                 "user_id": device.user_id,
                 "device_id": device.device_id,
                 'room': device.room,
-                'knickname': device.knickname,
+                'nickname': device.nickname,
                 'current_temp': device.current_temp,
                 'current_humidity': device.current_humidity,
                 'image_url': device.image_url,
@@ -137,7 +135,7 @@ class DialogInfo(APIView):
 
     def get(self, request, device_id):
         user = request.user
-        device = Device.objects.get(device_id=device_id)
+        device = Device.objects.get(device_id=int(device_id))
         plant = Plant.objects.get(airtable_id=device.airtable_plant_id)
 
         readinghistory = device.readinghistory_set.all()
@@ -152,7 +150,7 @@ class DialogInfo(APIView):
             "user_id": device.user_id,
             "device_id": device.device_id,
             'room': device.room,
-            'knickname': device.knickname,
+            'nickname': device.nickname,
             "airtable_plant_id": device.airtable_plant_id,
             'scientific_name': plant.scientific_name,
             'containers': plant.containers,

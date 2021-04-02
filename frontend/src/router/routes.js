@@ -11,7 +11,12 @@ const routes = [
         path: '/request-email-confirmation',
         component: () => import('pages/request-email-confirmation.vue'),
         meta: { requiresAuth: true }
-      }
+      },
+      {
+        path: '/history',
+        component: () => import('pages/history.vue'),
+        meta: { requiresAuth: true },
+      },
     ]
   },
   {

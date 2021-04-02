@@ -65,3 +65,8 @@ a {
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.46);
 }
+
+.flex-around {
+  display:flex;
+  justify-content: space-around;
+}

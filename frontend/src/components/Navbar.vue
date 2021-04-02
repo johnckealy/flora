@@ -37,8 +37,8 @@ export default {
     },
   },
   computed: {
-    authUser() {
-      return this.$auth.user();
+    async authUser() {
+      return await this.$auth.user();
     },
   },
 };
