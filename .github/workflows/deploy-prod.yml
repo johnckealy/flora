@@ -1,9 +1,9 @@
-name: deploy-prod
+name: deploy
 
 on:
   push:
     branches:
-      - none
+      - main
 
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 1
       - name: Run tests
-        run: sudo apt-get update -y && sudo apt-get install python3.8 -y &&  sudo apt-get install python-virtualenv -y && make test
+        run: sudo apt-get update -y && sudo apt-get install python3.8 -y &&  sudo apt-get install python3-virtualenv -y && make test
 
 
   build:
@@ -31,7 +31,7 @@ jobs:
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         source: "./*"
-        target: "./quasar-django-templates"
+        target: "./flora"
 
 
   deploy:
@@ -46,5 +46,5 @@ jobs:
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         command_timeout: 200m
-        script:  cd quasar-django-templates/ && make deploy-prod
+        script:  cd flora/ && gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.DOTENV_ENCRYPTION_KEY }} env.tar.gpg | tar -x &&  make deploy
 
