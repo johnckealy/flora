@@ -1,0 +1,35 @@
+[{
+        "model": "plants.device",
+        "pk": 1,
+        "fields": {
+            "nickname": "Robert Plant",
+            "room": "Kitchen",
+            "device_id": "1193747",
+            "airtable_plant_id": "recoZRpw5ChpHZvNB",
+            "user": 2,
+            "current_temp": "13.3",
+            "current_humidity": "23.4",
+            "current_soilmoist": "21.3",
+            "current_sun": 10000,
+            "current_waterlevel_ok": true,
+            "image_url": "urls"
+        }
+    },
+    {
+        "model": "plants.device",
+        "pk": 2,
+        "fields": {
+            "nickname": "George Bush",
+            "room": "Hall",
+            "device_id": "1193847",
+            "airtable_plant_id": "recseKarslPRXwJaV",
+            "user": 2,
+            "current_temp": "73.3",
+            "current_humidity": "23.4",
+            "current_soilmoist": "49.3",
+            "current_sun": 20000,
+            "current_waterlevel_ok": false,
+            "image_url": "urls"
+        }
+    }
+]

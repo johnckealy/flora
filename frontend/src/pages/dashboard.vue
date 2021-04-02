@@ -44,6 +44,7 @@
                           <status-icon
                             :clr="device.status.water.color"
                             :ic="'mdi-cup'"
+                            :size="'40px'"
                             :tp="`Water ${
                               device.current_waterlevel_ok
                                 ? 'is okay'
@@ -52,21 +53,25 @@
                           />
                           <status-icon
                             :clr="device.status.sun.color"
+                            :size="'40px'"
                             :ic="'mdi-white-balance-sunny'"
                             :tp="`Light (${device.current_sun})`"
                           />
                           <status-icon
                             :clr="device.status.humidity.color"
+                            :size="'40px'"
                             :ic="'mdi-water-percent'"
                             :tp="`Humidity (${device.current_humidity}%)`"
                           />
                           <status-icon
                             :clr="device.status.temperature.color"
+                            :size="'40px'"
                             :ic="'mdi-thermometer-lines'"
                             :tp="`Soil Moisture (${device.current_temp} °F)`"
                           />
                           <status-icon
                             :clr="device.status.soilmoist.color"
+                            :size="'40px'"
                             :ic="'mdi-watering-can'"
                             :tp="`Soil Moisture (${device.current_soilmoist})`"
                           />
