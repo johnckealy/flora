@@ -3,7 +3,9 @@
     <q-parallax src="~assets/banner.jpg">
       <div class="text-white overlay flex justify-center items-center">
         <div class="q-ma-lg">
-          <h1 class="q-ma-none" style="font-weight: 400">FlorA</h1>
+          <h1 class="flex items-start q-ma-none" style="font-weight: 400">FlorA
+            <q-img width="42px" src="~assets/icon-white.svg"></q-img>
+          </h1>
           <h4 class="q-my-lg">Automated plant care for every plant owner</h4>
           <div class="row text-center">
             <div class="col-12">

@@ -22,6 +22,11 @@ const routes = [
         component: () => import('pages/add-plants.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: '/account',
+        component: () => import('pages/account.vue'),
+        meta: { requiresAuth: true },
+      },
     ]
   },
   {

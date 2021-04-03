@@ -33,10 +33,6 @@
         </p>
       </div>
 
-      <span class="text-body2 q-pa-md q-ma-md"
-        >Don't have an account? Register <a href="/register">here.</a>
-      </span>
-
       <div>
         <q-btn
           class="q-ml-md full-width q-py-xs q-mx-auto"
@@ -47,6 +43,16 @@
         </q-btn>
       </div>
     </q-form>
+
+    <div class="row">
+      <div class="col-12 q-my-xs flex justify-center">
+        <router-link to="/register" class="text-primary">Forgot password?</router-link>
+      </div>
+    </div>
+
+    <div class="text-subtitle1 q-pa-md q-ma-md">
+      Don't have an account? Register <a href="/register">here.</a>
+    </div>
   </div>
 </template>
 
