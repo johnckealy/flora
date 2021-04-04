@@ -64,7 +64,6 @@
       <div>
         <q-btn
           no-caps
-          glossy
           class="q-ml-md full-width q-mx-auto"
           type="submit"
           color="primary"

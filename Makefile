@@ -13,10 +13,6 @@ env-dev:
 	$(eval include env/.env.dev)
 	$(eval export $(shell sed 's/=.*//' env/.env.dev))
 
-env-test:
-	$(eval include env/.env.test)
-	$(eval export $(shell sed 's/=.*//' env/.env.test))
-
 env-prod:
 	$(eval include env/.env.prod)
 	$(eval export $(shell sed 's/=.*//' env/.env.prod))
@@ -60,7 +56,7 @@ migrations: env-dev
 flush-the-database-yes-really: env-dev
 	$(IN_ENV) && python $(DJANGO_MANAGE) flush
 
-test: env-test build-python
+test: build-python
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && export SQL_ENGINE=django.db.backends.sqlite3 && export SQL_DATABASE=:memory: && $(PYTHON) -m pytest api/tests/
 
 encrypt-dotenv:

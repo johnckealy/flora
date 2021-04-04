@@ -8,6 +8,11 @@ const routes = [
       { path: '/login', component: () => import('pages/login.vue') },
       { path: '/register', component: () => import('pages/register.vue') },
       {
+        path: '/dashboard',
+        component: () => import('pages/dashboard.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
         path: '/request-email-confirmation',
         component: () => import('pages/request-email-confirmation.vue'),
         meta: { requiresAuth: true }
@@ -25,17 +30,6 @@ const routes = [
       {
         path: '/account',
         component: () => import('pages/account.vue'),
-        meta: { requiresAuth: true },
-      },
-    ]
-  },
-  {
-    path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      {
-        path: '/dashboard',
-        component: () => import('pages/dashboard.vue'),
         meta: { requiresAuth: true },
       },
     ]

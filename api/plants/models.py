@@ -50,7 +50,7 @@ class Device(models.Model):
     current_soilmoist = models.DecimalField(max_digits=4, decimal_places=1, null=True)
     current_sun = models.IntegerField(null=True)
     current_waterlevel_ok = models.BooleanField(null=True)
-    image_url = models.CharField(max_length=400, null=True)
+    image_url = models.CharField(max_length=400, null=True, blank=True)
 
     def __str__(self):
         return self.nickname

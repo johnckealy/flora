@@ -3,7 +3,8 @@
     <q-parallax src="~assets/banner.jpg">
       <div class="text-white overlay flex justify-center items-center">
         <div class="q-ma-lg">
-          <h1 class="flex items-start q-ma-none" style="font-weight: 400">FlorA
+          <h1 class="flex items-start q-ma-none" style="font-weight: 400">
+            FlorA
             <q-img width="42px" src="~assets/icon-white.svg"></q-img>
           </h1>
           <h4 class="q-my-lg">Automated plant care for every plant owner</h4>
@@ -81,7 +82,7 @@
               ></q-img>
             </div>
             <div class="text-h6 col-12 q-pa-lg">
-               <h4 class="text-center display-1 q-my-5">True Automation</h4>
+              <h4 class="text-center display-1 q-my-5">True Automation</h4>
               FlorA is true houseplant automation. It understands the unique
               needs of each of your plants – providing water and real-time
               environmental monitoring.
@@ -99,7 +100,9 @@
               ></q-img>
             </div>
             <div class="text-h6 col-12 q-pa-lg">
-              <h4 class="text-center display-1 q-my-5">Healthy, Happy Plants</h4>
+              <h4 class="text-center display-1 q-my-5">
+                Healthy, Happy Plants
+              </h4>
               FlorA’s automation allows busy or traveling plant owners to leave
               even their most sensitive or demanding plants alone for days or
               weeks at a time.
@@ -108,7 +111,6 @@
         </div>
       </div>
     </q-parallax>
-
 
     <div class="container">
       <div class="row items-center q-my-lg">
@@ -134,7 +136,10 @@
     </div>
 
     <div class="row text-subtitle1 justify-center items-center">
-      <div style="padding: 50px 30vw" class="col-12 text-white bg-secondary text-right">
+      <div
+        style="padding: 50px 30vw"
+        class="col-12 text-white bg-secondary text-right"
+      >
         2021 – FlorA Plant Care
       </div>
     </div>
@@ -147,21 +152,14 @@ export default {
     contactEmail: "",
     contactTextBody: "",
   }),
-  async mounted() {
-    await this.$auth.checkTokens();
-    if (this.$auth.user()) {
-      this.$router.push('/dashboard');
-    }
-  },
-  methods: {},
   computed: {},
 };
 </script>
 
 <style lang="scss">
-  .image-icons {
-    @media (max-width: $breakpoint-md-max) {
-      height: 1000px !important;
-    }
+.image-icons {
+  @media (max-width: $breakpoint-md-max) {
+    height: 1000px !important;
   }
+}
 </style>

@@ -32,7 +32,9 @@
               expand-icon-class="hidden"
               dense
             >
-              <h6 class="q-mb-none q-mt-md">Which of the following would best describe your plant?</h6>
+              <h6 class="q-mb-none q-mt-md">
+                Which of the following would best describe your plant?
+              </h6>
               <div class="q-pa-md">
                 <q-option-group
                   :options="radioOptions"
@@ -54,15 +56,164 @@
         </div>
       </div>
 
-      <div v-if="tab === 'step2'">
+      <div v-else-if="tab === 'step2'">
+        <h1 class="text-h5 text-center text-weight-bold">
+          Step 2/3:
+          <span class="text-weight-regular">Name and Place Your Plant</span>
+        </h1>
+        <h6 class="text-subtitle1">
+          Now, give your plant a nickname to keep track of it better, and let us
+          know which room it will be in. If you have already purchased your
+          FlorA device from us, now is the time to enter the Device ID number.
+          If not, that's okay! You can still set up your plant and get basic
+          information on how to maintain it yourself.
+        </h6>
+        <div class="row">
+          <div class="col-md-4 col-12 q-pa-sm">
+            <q-input
+              v-model="nickname"
+              label="Nickname"
+              outlined
+              placeholder="Plantly, Spot... Maybe Bob?"
+            />
+          </div>
+          <div class="col-md-4 col-12 q-pa-sm">
+            <q-input
+              outlined
+              v-model="room"
+              label="Room"
+              placeholder="Sunroom, Hall, etc.."
+            />
+          </div>
+          <div class="col-md-4 col-12 q-pa-sm">
+            <q-input
+              v-model="deviceId"
+              outlined
+              label="FlorA Device HID#"
+              placeholder="ID of your FlorA device"
+            />
+          </div>
+        </div>
 
-          <h2>You chose the  {{ plant.plant_name }}</h2>
-          <p>To be continued...</p>
+        <div class="row q-ma-lg">
+          <div class="col-6 q-px-lg">
+            <a href="https://floraplantcare.com/" target="_blank">
+              <q-btn
+                color="negative"
+                class="full-width"
+                label="Get a FlorA device"
+            /></a>
+          </div>
+          <div class="col-6 q-px-lg">
+            <q-btn
+              color="primary"
+              class="full-width"
+              @click="confirmation"
+              label="Submit"
+            />
+          </div>
+        </div>
+
+        <div class="q-py-lg"></div>
+
+        <div class="row items-center q-ma-md">
+          <div class="col-3 col-md-2">
+            <q-img
+              :src="
+                plant.large_thumbnail_url
+                  ? plant.large_thumbnail_url
+                  : require('src/assets/no-plant.svg')
+              "
+            />
+          </div>
+          <div class="col-9 col-md-10 q-pa-md">
+            <h6 class="text-h4 roman q-my-sm">
+              {{ plant.plant_name }}
+            </h6>
+            <span class="text-subtitle1 text-grey-9 text-italic q-my-lg">
+              {{ plant.scientific_name }}</span
+            >
+          </div>
+        </div>
+        <div class="row q-ma-md">
+          <div class="roman q-pb-lg text-h6 col-12">
+            {{ plant.description }}
+          </div>
+          <div
+            v-for="(feature, i) in features"
+            :key="i"
+            class="col-12 text-subtitle1 q-pa-sm"
+          >
+            <div class="row text-subtitle2">
+              <div class="col-1 text-grey-8">
+                <q-icon size="22px" :name="feature.icon" />
+              </div>
+              <div class="col-3 text-grey-8">
+                {{ feature.fieldText }}
+              </div>
+              <div class="col-8 q-pl-lg">
+                {{ plant[feature.field] }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-
-
-
+      <div v-else-if="tab === 'step3'">
+        <h1 class="text-h5 text-center text-weight-bold">
+          Step 3/3:
+          <span class="text-weight-regular">Confirm Your Plant</span>
+        </h1>
+        <div class="row">
+          <div class="col-8">
+            <h6 class="text-h4 roman q-my-sm">
+              {{ nickname }}
+            </h6>
+            <span class="text-subtitle1 text-grey-9 text-italic q-my-lg">
+              {{ plant.scientific_name }}</span
+            >
+          </div>
+          <div class="col-3">
+            <q-uploader
+              @uploaded="uploadURL"
+              max-file-size="2000000"
+              :url="`${apiURL}/upload/`"
+              with-credentials
+              auto-upload
+              :label="`Upload an image of ${nickname}`"
+              color="secondary"
+              @rejected="onUploadRejected"
+            />
+          </div>
+        </div>
+        <div
+          v-for="(confirmField, i) in confirmFields"
+          :key="i"
+          class="row q-my-lg text-subtitle2"
+        >
+          <div class="col-1 text-grey-8">
+            <q-icon size="22px" :name="confirmField.icon" />
+          </div>
+          <div class="col-3 text-grey-8">
+            {{ confirmField.label }}
+          </div>
+          <div class="col-8 q-pl-lg">
+            {{ confirmField.value }}
+          </div>
+        </div>
+        <q-btn @click="onSubmit" color="primary"
+          >Confirm and start tracking!</q-btn
+        >
+        <div>
+          <p
+            class="q-mt-md text-red"
+            v-for="(error, i) in submitErrors"
+            :key="i"
+          >
+            {{ error }}
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -77,11 +228,40 @@ export default {
     radioChoice: null,
     stringOptions: null,
     plantsIndex: null,
+    nickname: null,
+    room: null,
+    deviceId: null,
+    submitErrors: [],
+    uploadHref: "",
     radioOptions: [
       { label: "Generic Tropical Foliage", value: "rec73MHWsvWI3bD9t" },
       { label: "Generic Low Light Plant", value: "recAWxPMILVXSsdrF" },
       { label: "Generic High-Light Plant", value: "recDXQgPw6qjlpJxL" },
       { label: "Generic Succulent", value: "recoQrXzaUVTCAK2S" },
+    ],
+    fields: [],
+    confirmFields: [],
+    features: [
+      {
+        field: "scientific_name",
+        fieldText: "Scientific Name",
+        icon: "mdi-scale-balance",
+      },
+      {
+        field: "toxicity",
+        fieldText: "Toxicity",
+        icon: "mdi-biohazard",
+      },
+      {
+        field: "sun_requirements",
+        fieldText: "Sun Requirements",
+        icon: "mdi-weather-sunny",
+      },
+      {
+        field: "ideal_soil_type",
+        fieldText: "Ideal Soil Type",
+        icon: "mdi-wall-sconce-round-variant",
+      },
     ],
   }),
   mounted() {
@@ -94,6 +274,37 @@ export default {
     plantChoice(val) {
       this.plant = val;
     },
+    uploadURL({ files, xhr }) {
+      this.uploadHref = xhr.response;
+    },
+    onUploadRejected(rejectedEntries) {
+      console.log(rejectedEntries);
+      this.$q.notify({
+        type: "negative",
+        message: `Image uploads must be smaller than 2mb`,
+      });
+    },
+    confirmation() {
+      this.confirmFields = [
+        {
+          label: "Nickname",
+          value: this.nickname,
+          icon: "mdi-sprout",
+        },
+        {
+          label: "Room",
+          value: this.room,
+          icon: "mdi-home",
+        },
+        {
+          label: "Device ID#",
+          value: this.deviceId,
+          icon: "mdi-tag-multiple-outline",
+        },
+      ];
+      this.tab = "step3";
+      this.submitErrors = [];
+    },
     async getPlants() {
       const response = await this.$auth.axios({
         url: "plants_index",
@@ -105,6 +316,45 @@ export default {
           return element.plant_name;
         });
       }
+    },
+    async onSubmit() {
+      const postData = {
+        nickname: this.nickname,
+        room: this.room,
+        device_id: this.deviceId,
+        airtable_plant_id: this.plant.airtable_id,
+        image_url: this.uploadHref,
+      };
+      try {
+        await this.$auth.axios({
+          url: "/add_device/",
+          data: postData,
+          method: "POST",
+        });
+        this.$q.notify({ message: "Device registered successfully" });
+      } catch (e) {
+        this.$q.notify({
+          message: "There was a problem registering the device",
+          color: "red-6",
+          icon: "mdi-alert-outline",
+        });
+        const errors = e.response.data;
+
+        Object.entries(errors).forEach((entry) => {
+          if (Array.isArray(entry[1])) {
+            if (entry[1][0] === "This field may not be null.") {
+              this.submitErrors.push(
+                `The ${entry[0]} field may not be left blank. Please give it a value.`
+              );
+            }
+          }
+        });
+      }
+    },
+  },
+  computed: {
+    apiURL() {
+      return process.env.API_URL;
     },
   },
   watch: {

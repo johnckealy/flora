@@ -47,7 +47,9 @@ class DeviceDetail(generics.GenericAPIView):
             return Response({
                 "error": "Device registration failed. That device ID has already been registered."
             })
-        serializer = self.get_serializer(data=request.data)
+        data = request.data
+        data['user'] = request.user.id
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         device = serializer.save()
         return Response({
@@ -192,12 +194,15 @@ class ImageUploadView(APIView):
         """Upload a user image to the DigitOcean Spaces
         bucket."""
         try:
-            image = request.data['file']
-            name, ext = os.path.splitext(image.name)
-            filename = f"{name}-{get_random_string(9)}{ext}"
-            bucketname = os.path.splitext(request.user.username)[0].replace('@', 'at')
-            image_url = image_service(image, bucket=bucketname, filename=filename)
-            return Response(image_url, status=status.HTTP_201_CREATED)
+            if request.method == 'POST':
+                for filename in request.FILES:
+                    key = filename
+                image = request.FILES[key]
+                name, ext = os.path.splitext(image.name)
+                filename = f"{name}-{get_random_string(9)}{ext}"
+                bucketname = os.path.splitext(request.user.username)[0].replace('@', 'at')
+                image_url = image_service(image, bucket=bucketname, filename=filename)
+                return Response(image_url, status=status.HTTP_201_CREATED)
         except:
             return Response(
                 {'error': 'There was a problem uploading your image. Please try again.'},
