@@ -1,7 +1,7 @@
 <template>
   <q-toolbar class="bg-secondary">
-    <router-link to="/">
-      <div @click="$router.push('/')">
+    <router-link :to="authUser ? '/dashboard' : '/'">
+      <div>
         <img alt="logo" src="~assets/icon-white.svg" width="50px" />
       </div>
     </router-link>

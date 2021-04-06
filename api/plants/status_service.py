@@ -32,7 +32,7 @@ class StatusService:
                     self.alerts.append({
                         "message": f"{self.device.nickname}: {field_name} alert.",
                         "color": "negative",
-                        "icon": "alertIcon",
+                        "icon": "mdi-alert-outline",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
@@ -45,7 +45,7 @@ class StatusService:
                     self.alerts.append({
                         "message": f"{self.device.nickname}: {field_name} alert.",
                         "color": "negative",
-                        "icon": "alertIcon",
+                        "icon": "mdi-alert-outline",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
@@ -58,7 +58,7 @@ class StatusService:
                     self.alerts.append({
                         "message": f"{self.device.nickname}: {field_name} issue.",
                         "color": "warning",
-                        "icon": "warningIcon",
+                        "icon": "mdi-bell-alert-outline",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
@@ -71,7 +71,7 @@ class StatusService:
                     self.alerts.append({
                         "message": f"{self.device.nickname}: {field_name} issue.",
                         "color": "warning",
-                        "icon": "warningIcon",
+                        "icon": "mdi-bell-alert-outline",
                         "date": datetime.now().strftime("%m/%d/%Y")
                     })
                     self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
@@ -85,6 +85,12 @@ class StatusService:
             }
         else:
             self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
+            self.alerts.append({
+                'message': f"There is no {field_name} information for {self.device.nickname}.",
+                "color": "warning",
+                "icon": "mdi-bell-alert-outline",
+                "date": datetime.now().strftime("%m/%d/%Y")
+            })
             return {
                 'color': 'warning',
                 'message': f"There is no {field_name} information for the {plant_name} in your {room}."
@@ -132,9 +138,9 @@ class StatusService:
         elif self.device.current_waterlevel_ok==False:
             self.dashboard_message = self.BAD_DASHBOARD_MESSAGE
             self.alerts.append({
-                "message": alerts_copy.alert_lower_copy,
+                "message": f"{self.device.nickname}: {alerts_copy.alert_lower_copy}",
                 "color": "negative",
-                "icon": "alertIcon",
+                "icon": "mdi-alert-outline",
                 "date": datetime.now().strftime("%m/%d/%Y")
             })
             return {

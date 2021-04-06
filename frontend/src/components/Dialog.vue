@@ -4,6 +4,7 @@
       class="q-ma-xs fixed"
       style="z-index: 100"
       size="15px"
+      color="dark"
       icon="mdi-close"
       round
       dense
@@ -17,9 +18,9 @@
             width="100%"
             style="max-height: 27em"
             :src="
-              device.small_thumbnail_url
-                ? device.small_thumbnail_url
-                : require('src/assets/no-plant.svg')
+              device.image_url
+                ? device.image_url
+                : require('src/assets/clipart-plant.png')
             "
           ></q-img>
         </div>
@@ -97,7 +98,7 @@
               <div class="col-1 text-grey-8">
                 <q-icon size="22px" :name="feature.icon" />
               </div>
-              <div class="col-3 text-grey-8 ">
+              <div class="col-3 text-grey-8">
                 {{ feature.fieldText }}
               </div>
               <div class="col-8 q-pl-lg">
@@ -165,7 +166,9 @@ export default {
         {
           field: "sun",
           icon: "mdi-white-balance-sunny",
-          value: `${this.dialogData.current_sun}`,
+          value: this.dialogData.current_sun
+            ? 'Light: ' + this.dialogData.current_sun
+            : "Light data not available",
         },
         {
           field: "water",
@@ -177,17 +180,23 @@ export default {
         {
           field: "humidity",
           icon: "mdi-water-percent",
-          value: this.dialogData.current_humidity + " %",
+          value: this.dialogData.current_humidity
+            ? 'Humidity: ' + this.dialogData.current_humidity + "%"
+            : "Humidity data not available",
         },
         {
           field: "temperature",
           icon: "mdi-thermometer-lines",
-          value: this.dialogData.current_temp + " °F",
+          value: this.dialogData.current_temp
+            ? 'Temperature: ' + this.dialogData.current_temp + " °F"
+            : "Temperature data not available",
         },
         {
           field: "soilmoist",
           icon: "mdi-watering-can",
-          value: this.dialogData.current_soilmoist,
+          value: this.dialogData.current_soilmoist
+            ? "Soil Moisture: " + this.dialogData.current_soilmoist
+            : "Soil Moisture data not available",
         },
       ]),
         (this.loading = false);

@@ -6,7 +6,7 @@
 
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-input
-        v-model="username"
+        v-model="email"
         label="Email"
         lazy-rules="ondemand"
         :rules="[
@@ -60,7 +60,7 @@
 export default {
   data() {
     return {
-      username: null,
+      email: null,
       password: null,
       loginErrorMessage: false,
       errorMessages: [],
@@ -71,7 +71,7 @@ export default {
     async onSubmit() {
       this.loading = true;
       const response = await this.$auth.login({
-        username: this.username,
+        email: this.email,
         password: this.password,
       });
       if (response.status === 200) {

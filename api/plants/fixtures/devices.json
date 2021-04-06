@@ -12,7 +12,7 @@
             "current_soilmoist": "21.3",
             "current_sun": 10000,
             "current_waterlevel_ok": true,
-            "image_url": "urls"
+            "image_url": null
         }
     },
     {
@@ -29,7 +29,7 @@
             "current_soilmoist": "49.3",
             "current_sun": 20000,
             "current_waterlevel_ok": false,
-            "image_url": "urls"
+            "image_url": null
         }
     }
 ]

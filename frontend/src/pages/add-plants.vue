@@ -89,6 +89,7 @@
             <q-input
               v-model="deviceId"
               outlined
+              type="number"
               label="FlorA Device HID#"
               placeholder="ID of your FlorA device"
             />
@@ -122,7 +123,7 @@
               :src="
                 plant.large_thumbnail_url
                   ? plant.large_thumbnail_url
-                  : require('src/assets/no-plant.svg')
+                  : require('src/assets/clipart-plant.png')
               "
             />
           </div>
@@ -232,7 +233,7 @@ export default {
     room: null,
     deviceId: null,
     submitErrors: [],
-    uploadHref: "",
+    uploadHref: null,
     radioOptions: [
       { label: "Generic Tropical Foliage", value: "rec73MHWsvWI3bD9t" },
       { label: "Generic Low Light Plant", value: "recAWxPMILVXSsdrF" },
@@ -275,7 +276,7 @@ export default {
       this.plant = val;
     },
     uploadURL({ files, xhr }) {
-      this.uploadHref = xhr.response;
+      this.uploadHref = xhr.response.replace(/"/g,"");
     },
     onUploadRejected(rejectedEntries) {
       console.log(rejectedEntries);
@@ -332,6 +333,7 @@ export default {
           method: "POST",
         });
         this.$q.notify({ message: "Device registered successfully" });
+        this.$router.push('/dashboard')
       } catch (e) {
         this.$q.notify({
           message: "There was a problem registering the device",

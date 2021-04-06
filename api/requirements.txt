@@ -19,3 +19,4 @@ redis
 django-celery-beat
 django-celery-results
 boto3
+Pillow
