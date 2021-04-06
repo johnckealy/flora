@@ -13,7 +13,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework import status
 from .image_service import image_service
 from django.utils.crypto import get_random_string
-from api.scripts.thingspeak_integration import ThingSpeakIntegration
+from scripts.thingspeak_integration import ThingSpeakIntegration
 
 
 class PlantIndex(generics.ListCreateAPIView):
