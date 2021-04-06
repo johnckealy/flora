@@ -202,9 +202,10 @@
             {{ confirmField.value }}
           </div>
         </div>
-        <q-btn @click="onSubmit" color="primary"
-          >Confirm and start tracking!</q-btn
-        >
+        <q-btn @click="onSubmit" color="primary">
+          {{ settingUp ? "Setting up..." : "Confirm and start tracking!" }}
+          <q-spinner-ball class="q-mx-lg" v-if="settingUp" color="white" />
+        </q-btn>
         <div>
           <p
             class="q-mt-md text-red"
@@ -234,6 +235,7 @@ export default {
     deviceId: null,
     submitErrors: [],
     uploadHref: null,
+    settingUp: false,
     radioOptions: [
       { label: "Generic Tropical Foliage", value: "rec73MHWsvWI3bD9t" },
       { label: "Generic Low Light Plant", value: "recAWxPMILVXSsdrF" },
@@ -276,7 +278,7 @@ export default {
       this.plant = val;
     },
     uploadURL({ files, xhr }) {
-      this.uploadHref = xhr.response.replace(/"/g,"");
+      this.uploadHref = xhr.response.replace(/"/g, "");
     },
     onUploadRejected(rejectedEntries) {
       console.log(rejectedEntries);
@@ -319,6 +321,7 @@ export default {
       }
     },
     async onSubmit() {
+      this.settingUp = true;
       const postData = {
         nickname: this.nickname,
         room: this.room,
@@ -333,7 +336,7 @@ export default {
           method: "POST",
         });
         this.$q.notify({ message: "Device registered successfully" });
-        this.$router.push('/dashboard')
+        this.$router.push("/dashboard");
       } catch (e) {
         this.$q.notify({
           message: "There was a problem registering the device",
@@ -341,7 +344,6 @@ export default {
           icon: "mdi-alert-outline",
         });
         const errors = e.response.data;
-
         Object.entries(errors).forEach((entry) => {
           if (Array.isArray(entry[1])) {
             if (entry[1][0] === "This field may not be null.") {
@@ -350,8 +352,12 @@ export default {
               );
             }
           }
+          if (entry[0] === "device_error") {
+            this.submitErrors.push(`${entry[1]}`);
+          }
         });
       }
+      this.settingUp = false;
     },
   },
   computed: {

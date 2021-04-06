@@ -13,7 +13,7 @@ from rest_framework.parsers import FileUploadParser
 from rest_framework import status
 from .image_service import image_service
 from django.utils.crypto import get_random_string
-
+from api.scripts.thingspeak_integration import ThingSpeakIntegration
 
 
 class PlantIndex(generics.ListCreateAPIView):
@@ -44,14 +44,18 @@ class DeviceDetail(generics.GenericAPIView):
 
     def post(self, request):
         if Device.objects.filter(device_id=request.data['device_id']).count() > 0:
-            return Response({
-                "error": "Device registration failed. That device ID has already been registered."
-            })
+            return Response({'device_error': 'Device registration failed. That device ID has already been registered.'},
+                             status=status.HTTP_400_BAD_REQUEST)
         data = request.data
         data['user'] = request.user.id
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         device = serializer.save()
+
+        EventHistory.objects.create(user=device.user, device=device, message=f"FlorA updated its data for '{device.nickname}'")
+        thingspeak = ThingSpeakIntegration(device_id=device.device_id, reading_hist_days=15, averaging_window=1440)
+        thingspeak.process_device()
+
         return Response({
             "device": DeviceSerializer(device, context=self.get_serializer_context()).data,
             "message": "Device Created Successfully. "
