@@ -20,7 +20,7 @@
             "request": "launch",
             "module": "pytest",
             "args": [
-                "${workspaceFolder}/api/tests/"
+                "${workspaceFolder}/api/tests/test_images.py"
             ],
             "env": {
                 "DJANGO_SETTINGS_MODULE": "api.config.settings",

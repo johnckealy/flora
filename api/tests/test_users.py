@@ -25,12 +25,12 @@ class UserTests(APITestCase):
 
     def test_login(self):
         """Ensure we can Login."""
-        response = self.client.login(username='jane', password='secret')
+        response = self.client.login(email='jane@email.com', password='secret')
         self.assertTrue(response)
 
     def test_token_refresh(self):
         url = '/token/refresh/'
-        response = self.client.post('/login/', {'username': 'jane', 'password': 'secret'})
+        response = self.client.post('/login/', {'email': 'jane@email.com', 'password': 'secret'})
         content = json.loads(response.content)
         refresh_token = {'refresh': content['refresh_token']}
         response = self.client.post(url, refresh_token, format='json')
@@ -38,7 +38,7 @@ class UserTests(APITestCase):
         self.assertIn('access', response.data.keys())
 
     def test_logout(self):
-        self.client.post('/login/', {'username': 'jane', 'password': 'secret'})
+        self.client.post('/login/', {'email': 'jane@email.com', 'password': 'secret'})
         user = self.client.get('/user/').data
         self.assertEqual(user['username'], 'jane')
         response = self.client.post('/logout/', {})
