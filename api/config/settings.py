@@ -199,3 +199,6 @@ AUTHENTICATION_BACKENDS = (
  "django.contrib.auth.backends.ModelBackend",
  "allauth.account.auth_backends.AuthenticationBackend",
 )
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

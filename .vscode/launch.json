@@ -29,6 +29,16 @@
             }
         },
         {
+            "name": "Run Integration Tests",
+            "type": "python",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "${workspaceFolder}/api/tests/integration_tests/test_authentication.py"
+            ],
+            "envFile": "${workspaceFolder}/env/.env.dev",
+        },
+        {
             "name": "Run Users Script",
             "type": "python",
             "request": "launch",

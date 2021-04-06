@@ -11,6 +11,7 @@
           <div class="row text-center">
             <div class="col-12">
               <q-btn
+                id="login-button"
                 color="primary"
                 to="/login"
                 style="width: 250px; height: 50px"
