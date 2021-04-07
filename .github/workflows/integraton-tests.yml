@@ -25,4 +25,4 @@ jobs:
         pip install -r api/requirements.txt
     - name: Test With CrossBrowserTesting
       run: |
-        make integration-tests
+        make integration-tests-prod
