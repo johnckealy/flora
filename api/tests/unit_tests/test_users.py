@@ -5,7 +5,7 @@ import json
 
 class UserTests(APITestCase):
 
-    fixtures = ['api/tests/test_fixtures.json']
+    fixtures = ['api/tests/unit_tests/test_fixtures.json']
 
     def test_register(self):
         """Ensure we can create a new account object."""

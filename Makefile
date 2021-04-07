@@ -61,8 +61,15 @@ migrations: env-dev
 flush-the-database-yes-really: env-dev
 	$(IN_ENV) && python $(DJANGO_MANAGE) flush
 
-test: build-python
-	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && export SQL_ENGINE=django.db.backends.sqlite3 && export SQL_DATABASE=:memory: && $(PYTHON) -m pytest api/tests/
+unit-tests: build-python env-dev
+	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	export SQL_ENGINE=django.db.backends.sqlite3 && \
+	export SQL_DATABASE=:memory: && \
+	$(PYTHON) -m pytest api/tests/unit_tests/
+
+integration-tests: env-dev
+	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	$(PYTHON) -m pytest api/tests/integration_tests/
 
 encrypt-dotenv:
 	tar -c env/ | gpg --symmetric -c -o env.tar.gpg

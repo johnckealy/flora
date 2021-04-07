@@ -5,14 +5,12 @@ on:
     branches:
       - main
 
-
 jobs:
 
   test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
-
 
     steps:
     - uses: actions/checkout@v1
@@ -27,4 +25,4 @@ jobs:
         pip install -r api/requirements.txt
     - name: Test With CrossBrowserTesting
       run: |
-        make test
+        make integration-tests
