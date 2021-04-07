@@ -25,7 +25,7 @@ celery: env-dev
 
 deploy: env-prod env-sub build-prod-frontend
 	echo "Building ${ENVIRONMENT} Environment"
-	docker-compose up --build -d
+	docker-compose up --build 
 
 build-python:
 	virtualenv -p $(PYTHON) $(ENV_DIR)
@@ -62,7 +62,7 @@ flush-the-database-yes-really: env-dev
 	$(IN_ENV) && python $(DJANGO_MANAGE) flush
 
 test: build-python
-	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && export SQL_ENGINE=django.db.backends.sqlite3 && export SQL_DATABASE=:memory: && $(PYTHON) -m pytest api/tests/
+	$(IN_ENV) && export DJANG_SETTINGS_MODULE=api.config.settings && export SQL_ENGINE=django.db.backends.sqlite3 && export SQL_DATABASE=:memory: && $(PYTHON) -m pytest api/tests/
 
 encrypt-dotenv:
 	tar -c env/ | gpg --symmetric -c -o env.tar.gpg
