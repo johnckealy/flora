@@ -15,7 +15,11 @@ jobs:
         with:
           fetch-depth: 1
       - name: Run tests
-        run: sudo apt-get update -y && sudo apt-get install python3.8 -y &&  sudo apt-get install python3-virtualenv -y && make test
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install python3.8 -y
+          sudo apt-get install python3-virtualenv -y
+          make unit-tests
 
 
   build:
@@ -46,5 +50,8 @@ jobs:
         key: ${{ secrets.SSHKEY }}
         port: ${{ secrets.PORT }}
         command_timeout: 200m
-        script:  cd flora/ && gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.DOTENV_ENCRYPTION_KEY }} env.tar.gpg | tar -x &&  make deploy
+        script:   |
+          cd flora/
+          gpg --quiet --batch --yes --decrypt --passphrase=${{ secrets.DOTENV_ENCRYPTION_KEY }} env.tar.gpg | tar -x
+          make deploy
 

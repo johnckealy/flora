@@ -71,7 +71,7 @@ integration-tests-dev: env-dev
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
-integration-tests-prod: env-prod
+integration-tests-prod: build-python env-prod
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
