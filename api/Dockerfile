@@ -21,7 +21,7 @@ RUN pip3 install --upgrade pip
 COPY ./requirements.txt $APP_HOME
 COPY ./entrypoint.sh $APP_HOME
 
-RUN pip3 install -r $APP_HOME/requirements.txt
+RUN pip3 install --no-cache-dir -r $APP_HOME/requirements.txt
 
 RUN mkdir -p $APP_HOME/staticfiles
 
