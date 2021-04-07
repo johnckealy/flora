@@ -7,7 +7,7 @@ class AuthTest(LiveServerTestCase):
 
     def setUp(self) -> None:
         options = Options()
-        options.binary_location = '/usr/bin/brave-browser'
+        # options.binary_location = '/usr/bin/brave-browser'
         options.headless = True
         options.add_argument('ignore-certificate-errors')
         self.selenium = webdriver.Chrome(options = options)
