@@ -22,5 +22,5 @@ class AuthTest(LiveServerTestCase):
         self.selenium.get(self.base_url)
         login_btn = self.selenium.find_element_by_id('login-button')
         login_btn.click()
-        self.assertIn("Don't have an account", self.selenium.page_source)
+        self.assertIn("Don\'t have an account", self.selenium.page_source)
         self.selenium.close()

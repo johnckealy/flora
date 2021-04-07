@@ -71,10 +71,10 @@ integration-tests-dev: env-dev
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
-integration-tests-prod: build-python
-	export ORIGIN_URL=https://flora.johnkealy.com && \
-	export ENVIRONMENT=prod && \
+integration-tests-prod:  env-prod
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	$(IN_ENV) && export SQL_ENGINE=django.db.backends.sqlite3 && \
+	$(IN_ENV) && export SQL_DATABASE=:memory: && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
 encrypt-dotenv:
