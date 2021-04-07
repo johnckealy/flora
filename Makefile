@@ -6,7 +6,7 @@ ENV_DIR=.$(PYTHON)_env
 IN_ENV=. $(ENV_DIR)/bin/activate
 
 
-build-dev: env-dev build-python migrations run-django-scripts
+build-dev: env-dev build-python migrations run-startup-scripts run-sync-scripts
 	cd frontend && npm i
 
 env-dev:
