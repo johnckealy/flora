@@ -142,7 +142,7 @@
                     <div class="col-12 col-md-3 q-px-sm text-grey-8">
                       <div class="row q-pa-none">
                         <div class="col-6 text-right q-pa-sm col-md-12">
-                          {{ device.room }} – {{ device.device_id }}
+                          {{ device.room }} – {{ device.thingspeak_id }}
                         </div>
                         <div class="col-6 col-md-12 q-py-sm">
                           <q-btn @click="openDialog(device)" color="accent"

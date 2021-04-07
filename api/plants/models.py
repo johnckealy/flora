@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import uuid
 
 class PlantToleranceLimits(models.Model):
     """ Limits for the tolerance of each plant to various device fields. """
@@ -42,7 +42,8 @@ class Device(models.Model):
     device creates an entry in the dashboard."""
     nickname = models.CharField(max_length=70)
     room = models.CharField(max_length=70)
-    device_id = models.CharField(max_length=70, unique=True)
+    thingspeak_id = models.CharField(max_length=70, null=True)
+    device_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     airtable_plant_id = models.CharField(max_length=70)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     current_temp = models.DecimalField(max_digits=4, decimal_places=1, null=True)

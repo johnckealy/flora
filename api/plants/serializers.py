@@ -19,11 +19,11 @@ class DeviceSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         device = Device.objects.create(
             nickname = validated_data['nickname'],
-            device_id = validated_data['device_id'],
             airtable_plant_id = validated_data['airtable_plant_id'],
             room = validated_data['room'],
             user = validated_data['user'],
-            image_url = validated_data['image_url']
+            image_url = validated_data['image_url'],
+            thingspeak_id = validated_data['thingspeak_id'],
         )
         return device
 
@@ -66,6 +66,7 @@ class DashboardInfoSerializer(serializers.Serializer):
     scientific_name = serializers.CharField()
     nickname = serializers.CharField()
     room = serializers.CharField()
+    thingspeak_id = serializers.CharField()
     plant_name = serializers.CharField()
     small_thumbnail_url = serializers.CharField()
     current_temp = serializers.DecimalField(max_digits=4, decimal_places=1)
@@ -83,6 +84,7 @@ class DialogInfoSerializer(serializers.Serializer):
     user_id = serializers.IntegerField()
     airtable_plant_id = serializers.CharField()
     device_id = serializers.CharField()
+    thingspeak_id = serializers.CharField()
     scientific_name = serializers.CharField()
     plant_type = serializers.CharField()
     description = serializers.CharField()

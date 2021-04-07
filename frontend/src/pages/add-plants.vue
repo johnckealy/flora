@@ -87,7 +87,7 @@
           </div>
           <div class="col-md-4 col-12 q-pa-sm">
             <q-input
-              v-model="deviceId"
+              v-model="thingspeakId"
               outlined
               type="number"
               label="FlorA Device HID#"
@@ -232,7 +232,7 @@ export default {
     plantsIndex: null,
     nickname: null,
     room: null,
-    deviceId: null,
+    thingspeakId: null,
     submitErrors: [],
     uploadHref: null,
     settingUp: false,
@@ -301,7 +301,7 @@ export default {
         },
         {
           label: "Device ID#",
-          value: this.deviceId,
+          value: this.thingspeakId,
           icon: "mdi-tag-multiple-outline",
         },
       ];
@@ -325,7 +325,7 @@ export default {
       const postData = {
         nickname: this.nickname,
         room: this.room,
-        device_id: this.deviceId,
+        thingspeak_id: this.thingspeakId,
         airtable_plant_id: this.plant.airtable_id,
         image_url: this.uploadHref,
       };

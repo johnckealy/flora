@@ -43,9 +43,6 @@ class DeviceDetail(generics.GenericAPIView):
         return Response(serializer.data)
 
     def post(self, request):
-        if Device.objects.filter(device_id=request.data['device_id']).count() > 0:
-            return Response({'device_error': 'Device registration failed. That device ID has already been registered.'},
-                             status=status.HTTP_400_BAD_REQUEST)
         data = request.data
         data['user'] = request.user.id
         serializer = self.get_serializer(data=data)
@@ -53,7 +50,7 @@ class DeviceDetail(generics.GenericAPIView):
         device = serializer.save()
 
         EventHistory.objects.create(user=device.user, device=device, message=f"FlorA updated its data for '{device.nickname}'")
-        thingspeak = ThingSpeakIntegration(device_id=device.device_id, reading_hist_days=15, averaging_window=1440)
+        thingspeak = ThingSpeakIntegration(device_id=device.device_id, thingspeak_id=device.thingspeak_id, reading_hist_days=15, averaging_window=1440)
         thingspeak.process_device()
 
         return Response({
@@ -98,6 +95,7 @@ class DashboardInfo(APIView):
             dashboard_data.append({
                 "user_id": device.user_id,
                 "device_id": device.device_id,
+                "thingspeak_id": device.thingspeak_id,
                 'room': device.room,
                 'nickname': device.nickname,
                 'current_temp': device.current_temp,
@@ -141,7 +139,7 @@ class DialogInfo(APIView):
 
     def get(self, request, device_id):
         user = request.user
-        device = Device.objects.get(device_id=int(device_id))
+        device = Device.objects.get(device_id=device_id)
         plant = Plant.objects.get(airtable_id=device.airtable_plant_id)
 
         readinghistory = device.readinghistory_set.all()
@@ -155,6 +153,7 @@ class DialogInfo(APIView):
         dialog = {
             "user_id": device.user_id,
             "device_id": device.device_id,
+            "thingspeak_id": device.thingspeak_id,
             'room': device.room,
             'nickname': device.nickname,
             "airtable_plant_id": device.airtable_plant_id,

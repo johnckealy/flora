@@ -6,7 +6,7 @@ ENV_DIR=.$(PYTHON)_env
 IN_ENV=. $(ENV_DIR)/bin/activate
 
 
-build-dev: env-dev build-python migrations run-startup-scripts run-sync-scripts
+build-dev: env-dev build-python migrations run-django-scripts 
 	cd frontend && npm i
 
 env-dev:
@@ -46,13 +46,13 @@ frontend-serve: env-dev
 frontend-prod-serve: env-prod
 	cd frontend/dist/ssr/ && npm run start
 
-run-sync-scripts: env-dev
+run-django-scripts: env-dev
+	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript create_test_users
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript sync_to_airtable
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript thingspeak_integration
 
-run-startup-scripts: env-dev
+run-fixtures: env-dev
 	@$(IN_ENV) && python $(DJANGO_MANAGE) loaddata devices
-	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript create_test_users
 
 migrations: env-dev
 	$(IN_ENV) && python $(DJANGO_MANAGE) makemigrations --noinput

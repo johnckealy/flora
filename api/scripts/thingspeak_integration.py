@@ -10,8 +10,9 @@ from datetime import datetime, timedelta
 
 class ThingSpeakIntegration:
 
-    def __init__(self, device_id, reading_hist_days, averaging_window):
+    def __init__(self, device_id, thingspeak_id, reading_hist_days, averaging_window):
         self.device_id = device_id
+        self.thingspeak_id = thingspeak_id
         self.reading_hist_days = reading_hist_days
         self.averaging_window = averaging_window
 
@@ -46,7 +47,7 @@ class ThingSpeakIntegration:
                     history_entry.save()
 
     def get_instantaneous_fields(self):
-        THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{self.device_id}/feeds.json?results=1'
+        THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{self.thingspeak_id}/feeds.json?results=1'
         response = requests.get(THINGSPEAK_URL)
         res = response.json()
         feed = res['feeds'][0]
@@ -73,17 +74,17 @@ class ThingSpeakIntegration:
         """ Polling script to read device data from the thingspeak api,
         then populate the django app's database with it"""
 
-        THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{self.device_id}/feeds.json?average={self.averaging_window}'
+        THINGSPEAK_URL = f'https://api.thingspeak.com/channels/{self.thingspeak_id}/feeds.json?average={self.averaging_window}'
 
 
         LOG.warning(f"{Lcolors.INFO} ### INFO: {Lcolors.ENDC} Hitting the end point: {THINGSPEAK_URL}")
 
         response = requests.get(THINGSPEAK_URL)
         if response.status_code == status.HTTP_400_BAD_REQUEST:
-            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} Device with Id {self.device_id} was requested but not found in the database.")
+            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} Device with Id {self.thingspeak_id} was requested but not found in the database.")
             return False
         if response.status_code == status.HTTP_404_NOT_FOUND:
-            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} 404 (not found) while attempting to fetch device {self.device_id}.")
+            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} 404 (not found) while attempting to fetch device {self.thingspeak_id}.")
             return False
 
         channel_info = self.get_json(response)['channel']
@@ -100,7 +101,7 @@ class ThingSpeakIntegration:
         try:
             device = Device.objects.get(device_id=self.device_id)
         except Device.DoesNotExist:
-            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} Device with ID {self.device_id} is not in the database.")
+            LOG.warning(f"{Lcolors.WARNING} ### WARNING: {Lcolors.ENDC} Device with ID {self.thingspeak_id} is not in the database.")
         else:
             datetimes = [ parser.parse(feed['created_at']) for feed in feeds ]
             latest_index = datetimes.index(max(datetimes))
@@ -135,8 +136,8 @@ def run():
     ReadingHistory.objects.all().delete()
     for device in devices:
         EventHistory.objects.create(user=device.user, device=device, message=f"FlorA updated its data for '{device.nickname}'")
-        thingspeak = ThingSpeakIntegration(device_id=device.device_id, reading_hist_days=15, averaging_window=1440)
+        thingspeak = ThingSpeakIntegration(device_id=device.device_id, thingspeak_id=device.thingspeak_id, reading_hist_days=15, averaging_window=1440)
         succeeded = thingspeak.process_device()
         if succeeded:
-            LOG.info(f"{Lcolors.INFO} ### INFO: {Lcolors.ENDC} ThingSpeak Integration for device {device.device_id} ran successfully.")
+            LOG.info(f"{Lcolors.INFO} ### INFO: {Lcolors.ENDC} ThingSpeak Integration for device {device.thingspeak_id} ran successfully.")
     LOG.info(f"\n{Lcolors.SUCCESS} --- ThingSpeak integration complete. ---{Lcolors.ENDC}\n")
