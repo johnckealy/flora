@@ -26,7 +26,7 @@ celery: env-dev
 
 deploy: env-prod env-sub build-prod-frontend
 	echo "Building ${ENVIRONMENT} Environment"
-	docker-compose up --build -d
+	docker-compose up --build 
 
 build-python:
 	virtualenv -p $(PYTHON) $(ENV_DIR)
