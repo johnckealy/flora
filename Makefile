@@ -71,7 +71,9 @@ integration-tests-dev: env-dev
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
-integration-tests-prod: build-python env-prod
+integration-tests-prod: build-python
+	export ORIGIN_URL=https://flora.johnkealy.com && \
+	export ENVIRONMENT=prod && \
 	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
 	$(PYTHON) -m pytest api/tests/integration_tests/
 
