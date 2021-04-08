@@ -1,35 +1,17 @@
 [{
-        "model": "plants.device",
-        "pk": "eed8b267-d801-4186-bb2a-89db650cda6d",
-        "fields": {
-            "nickname": "George Bush",
-            "room": "hl",
-            "thingspeak_id": "12345",
-            "airtable_plant_id": "rec3cOSSgiOvt1JPF",
-            "user": 1,
-            "current_temp": null,
-            "current_humidity": null,
-            "current_soilmoist": null,
-            "current_sun": null,
-            "current_waterlevel_ok": null,
-            "image_url": null
-        }
-    },
-    {
-        "model": "plants.device",
-        "pk": "ed8db267-d801-4186-bb2a-81dd650cda6d",
-        "fields": {
-            "nickname": "Robert-Plant",
-            "room": "Hall",
-            "thingspeak_id": "1193747",
-            "airtable_plant_id": "rec3cOSSgiOvt1JPF",
-            "user": 1,
-            "current_temp": null,
-            "current_humidity": null,
-            "current_soilmoist": null,
-            "current_sun": null,
-            "current_waterlevel_ok": null,
-            "image_url": null
-        }
+    "model": "plants.device",
+    "pk": "ed8db267-d801-4186-bb2a-81dd650cda6d",
+    "fields": {
+        "nickname": "Plantly",
+        "room": "Sunroom",
+        "thingspeak_id": "1193747",
+        "airtable_plant_id": "rec3cOSSgiOvt1JPF",
+        "user": 1,
+        "current_temp": null,
+        "current_humidity": null,
+        "current_soilmoist": null,
+        "current_sun": null,
+        "current_waterlevel_ok": null,
+        "image_url": "https://floraimages.nyc3.digitaloceanspaces.com/guest/aloe-HXdVM87bI.jpeg"
     }
-]
+}]

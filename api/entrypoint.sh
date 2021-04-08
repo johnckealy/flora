@@ -17,6 +17,7 @@ fi
 python manage.py migrate
 python manage.py runscript create_test_users
 python manage.py runscript sync_to_airtable
+python manage.py loaddata devices
 python manage.py runscript thingspeak_integration
 python manage.py collectstatic --no-input
 

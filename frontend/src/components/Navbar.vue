@@ -11,6 +11,7 @@
     <q-btn
       v-if="!authUser"
       to="/login"
+      id="login-button"
       icon="mdi-account"
       class="q-ma-md"
       no-caps
@@ -39,7 +40,7 @@
             </q-item-section>
           </q-item>
 
-          <q-item clickable v-close-popup @click="$router.push('/account')">
+          <q-item :disabled="demo" clickable v-close-popup @click="$router.push('/account')">
             <q-item-section>
               <q-item-label>Account</q-item-label>
             </q-item-section>
@@ -79,6 +80,9 @@ export default {
     authUser() {
       return this.$auth.user();
     },
+    demo() {
+      return this.$store.state.demo;
+    }
   },
 };
 </script>

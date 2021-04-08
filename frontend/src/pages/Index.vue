@@ -13,11 +13,11 @@
               <q-btn
                 id="login-button"
                 color="primary"
-                to="/login"
+                @click="demoLogin"
                 style="width: 250px; height: 50px"
                 class="q-ma-lg text-subtitle1"
               >
-                Login
+                Run the demo
               </q-btn>
               <q-btn
                 color="accent"
@@ -136,6 +136,31 @@
       </div>
     </div>
 
+    <div class="bg-teal-9">
+      <div class="container">
+        <div class="row items-center q-my-lg">
+          <div
+            class="col-12 col-md-6 text-subtitle1 text-white q-pa-lg text-left"
+          >
+            <h5 class="q-my-lg">
+              Unsure? You can take a tour of the application before registering
+              for your own account.
+            </h5>
+          </div>
+          <div class="col-12 flex justify-center col-md-6 q-pa-lg">
+            <q-btn
+              color="primary"
+              @click="demoLogin"
+              style="width: 250px; height: 50px"
+              class="q-ma-lg text-subtitle1"
+            >
+              Run the demo
+            </q-btn>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="row text-subtitle1 justify-center items-center">
       <div
         style="padding: 50px 30vw"
@@ -153,7 +178,26 @@ export default {
     contactEmail: "",
     contactTextBody: "",
   }),
-  computed: {},
+  methods: {
+    async demoLogin() {
+      const response = await this.$auth.login({
+        email: "demo@email.com",
+        password: "dfDDfge&5Gdfgh£g",
+      });
+      if (response.status === 200) {
+        const user = await response.data.user;
+        await this.$store.commit("setdemo", user);
+        this.$q.notify({ message: "Welcome to demo mode!" });
+        this.$router.push("/dashboard");
+      } else {
+        this.$q.notify({
+          message: "Demo mode failed to start",
+          color: "red-6",
+          icon: "mdi-alert-outline",
+        });
+      }
+    },
+  },
 };
 </script>
 

@@ -47,11 +47,11 @@ frontend-prod-serve: env-prod
 	cd frontend/dist/ssr/ && npm run start
 
 run-django-scripts: env-dev
-	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript create_test_users
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript sync_to_airtable
 	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript thingspeak_integration
 
 run-fixtures: env-dev
+	@$(IN_ENV) && python $(DJANGO_MANAGE) runscript create_test_users
 	@$(IN_ENV) && python $(DJANGO_MANAGE) loaddata devices
 
 migrations: env-dev
@@ -60,22 +60,6 @@ migrations: env-dev
 
 flush-the-database-yes-really: env-dev
 	$(IN_ENV) && python $(DJANGO_MANAGE) flush
-
-unit-tests: build-python env-dev
-	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
-	export SQL_ENGINE=django.db.backends.sqlite3 && \
-	export SQL_DATABASE=:memory: && \
-	$(PYTHON) -m pytest api/tests/unit_tests/
-
-integration-tests-dev: env-dev
-	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
-	$(PYTHON) -m pytest api/tests/integration_tests/
-
-integration-tests-prod: build-python env-prod
-	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
-	$(IN_ENV) && export SQL_ENGINE=django.db.backends.sqlite3 && \
-	$(IN_ENV) && export SQL_DATABASE=:memory: && \
-	$(PYTHON) -m pytest api/tests/integration_tests/
 
 encrypt-dotenv:
 	tar -c env/ | gpg --symmetric -c -o env.tar.gpg
@@ -95,3 +79,22 @@ clean:
 	@rm -rf .pytest_cache
 	@rm -rf sqlite.db
 	@echo "Environment cleaned."
+
+
+test: unit-tests integration-tests-dev
+
+unit-tests: build-python env-dev
+	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	export SQL_ENGINE=django.db.backends.sqlite3 && \
+	export SQL_DATABASE=:memory: && \
+	$(PYTHON) -m pytest api/tests/unit_tests/
+
+integration-tests-dev: env-dev
+	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	$(PYTHON) -m pytest api/tests/integration_tests/
+
+integration-tests-prod: build-python env-prod
+	$(IN_ENV) && export DJANGO_SETTINGS_MODULE=api.config.settings && \
+	$(IN_ENV) && export SQL_ENGINE=django.db.backends.sqlite3 && \
+	$(IN_ENV) && export SQL_DATABASE=:memory: && \
+	$(PYTHON) -m pytest api/tests/integration_tests/

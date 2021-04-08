@@ -1,5 +1,6 @@
 <template>
   <q-page class="flex column flex-center">
+    <demo-mode-dashboard v-if="demo" />
     <q-img src="~assets//plant-backdrop.jpg" height="150vh">
       <div class="absolute-full" style="overflow: auto">
         <div class="container">
@@ -64,7 +65,8 @@
                   <div class="row items-center justify-center">
                     <div class="q-px-sm col-3 col-md-1">
                       <q-img
-                       width="60px" height="60px"
+                        width="60px"
+                        height="60px"
                         :src="
                           device.image_url
                             ? device.image_url
@@ -156,6 +158,7 @@
                             rounded
                             icon="mdi-trash-can-outline"
                             flat
+                            :disabled="demo"
                             @click="deleteDialog(device)"
                           />
                         </div>
@@ -210,6 +213,7 @@ import AlertCard from "../components/AlertCard.vue";
 import Dialog from "../components/Dialog.vue";
 import History from "../components/History.vue";
 import StatusIcon from "../components/StatusIcon.vue";
+import DemoModeDashboard from "../components/DemoModeDashboard.vue";
 export default {
   data: () => ({
     dash_data: [],
@@ -225,6 +229,7 @@ export default {
     History,
     Dialog,
     AlertCard,
+    DemoModeDashboard
   },
   mounted() {
     this.getDashboardData();
@@ -278,10 +283,10 @@ export default {
         return user.first_name;
       }
     },
+    demo() {
+      return this.$store.state.demo;
+    }
   },
 };
 </script>
 
-
-<style lang="scss">
-</style>

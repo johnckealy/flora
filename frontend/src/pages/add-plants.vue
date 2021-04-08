@@ -1,5 +1,7 @@
 <template>
   <div>
+    <demo-mode-add-plant v-if="demo" :currentTab="tab" />
+
     <q-tabs v-model="tab" dense class="bg-grey-2 text-teal">
       <q-tab name="step1" icon="mdi-magnify" label="Step 1" />
       <q-tab name="step2" icon="mdi-sprout" label="Step 2" />
@@ -226,6 +228,7 @@
 </template>
 
 <script>
+import DemoModeAddPlant from "../components/DemoModeAddPlant.vue";
 import SearchBar from "../components/SearchBar.vue";
 
 export default {
@@ -277,6 +280,7 @@ export default {
   },
   components: {
     SearchBar,
+    DemoModeAddPlant,
   },
   methods: {
     plantChoice(val) {
@@ -326,6 +330,17 @@ export default {
       }
     },
     async onSubmit() {
+      if (this.demo) {
+        this.$store.commit("setdemo", {});
+        this.$q.notify({
+          type: "demo",
+          message: "That's it for the demo! Registration is free, we hope you'll try it out!",
+          timeout: 3000,
+        });
+        this.$auth.logout();
+        this.$router.push('/')
+        return;
+      }
       this.settingUp = true;
       const postData = {
         nickname: this.nickname,
@@ -368,6 +383,9 @@ export default {
   computed: {
     apiURL() {
       return process.env.API_URL;
+    },
+    demo() {
+      return this.$store.state.demo;
     },
   },
   watch: {
