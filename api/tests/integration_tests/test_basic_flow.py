@@ -59,7 +59,10 @@ class AuthTest(LiveServerTestCase):
         search_flora.send_keys("Mint")
         self.selenium.find_element_by_id("step1-submit").click()
 
-        plant_heading = self.selenium.find_element_by_class_name("roman").text
+        roman_text = WebDriverWait(self.selenium, 15).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "roman")))
+
+        plant_heading = roman_text.text
         self.assertIn("Mint", plant_heading)
 
         self.selenium.find_element_by_id("nickname").send_keys("Robert Plant")
