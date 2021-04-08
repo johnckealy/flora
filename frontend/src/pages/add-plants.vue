@@ -47,6 +47,7 @@
           </div>
           <div class="col-12 flex justify-end">
             <q-btn
+              id="step1-submit"
               class="q-py-none q-px-lg q-mx-lg"
               color="primary"
               @click="tab = 'step2'"
@@ -71,6 +72,7 @@
         <div class="row">
           <div class="col-md-4 col-12 q-pa-sm">
             <q-input
+              for="nickname"
               v-model="nickname"
               label="Nickname"
               outlined
@@ -79,6 +81,7 @@
           </div>
           <div class="col-md-4 col-12 q-pa-sm">
             <q-input
+              for="room"
               outlined
               v-model="room"
               label="Room"
@@ -87,6 +90,7 @@
           </div>
           <div class="col-md-4 col-12 q-pa-sm">
             <q-input
+              for="thingspeak-id"
               v-model="thingspeakId"
               outlined
               type="number"
@@ -107,6 +111,7 @@
           </div>
           <div class="col-6 q-px-lg">
             <q-btn
+              id="step2-submit"
               color="primary"
               class="full-width"
               @click="confirmation"
@@ -202,7 +207,7 @@
             {{ confirmField.value }}
           </div>
         </div>
-        <q-btn @click="onSubmit" color="primary">
+        <q-btn id="step3-submit" @click="onSubmit" color="primary">
           {{ settingUp ? "Setting up..." : "Confirm and start tracking!" }}
           <q-spinner-ball class="q-mx-lg" v-if="settingUp" color="white" />
         </q-btn>

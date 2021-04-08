@@ -1,6 +1,10 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
 import os
 
 # Create your tests here.
@@ -8,7 +12,7 @@ class AuthTest(LiveServerTestCase):
 
     def setUp(self) -> None:
         options = Options()
-        self.base_url = os.environ.get('ORIGIN_URL')
+        self.base_url = os.environ.get('ORIGIN_URL', 'https://flora.johnkealy.com')
         if os.environ.get('ENVIRONMENT') == 'dev':
             options.binary_location = '/usr/bin/brave-browser'
         options.headless = True
@@ -18,9 +22,51 @@ class AuthTest(LiveServerTestCase):
         return super().setUp()
 
 
-    def test_login_page(self):
-        self.selenium.get(os.environ.get('ORIGIN_URL', 'https://flora.johnkealy.com'))
+    def tearDown(self) -> None:
+        self.selenium.quit()
+
+        return super().tearDown()
+
+
+    def test_basic_flow(self):
+        self.selenium.get(self.base_url)
         login_btn = self.selenium.find_element_by_id('login-button')
         login_btn.click()
-        self.assertIn("Don\'t have an account", self.selenium.page_source)
+
+        WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located((By.ID, "email-input")))
+
+        # fill in login details and submit
+        self.selenium.find_element_by_id('email-input').send_keys("guest@email.com")
+        self.selenium.find_element_by_id('password-input').send_keys("secret")
+        self.selenium.find_element_by_id('submit-login').click()
+
+        h6_element = WebDriverWait(self.selenium, 30).until(
+            EC.presence_of_element_located((By.TAG_NAME, "h6")))
+        self.assertIn("Hi Guest", h6_element.text)
+
+
+        self.selenium.get(self.base_url + '/add-plants')
+        self.assertIn("Find your plant", self.selenium.page_source)
+
+        search_flora = WebDriverWait(self.selenium, 10).until(
+            EC.presence_of_element_located((By.ID, "search-flora")))
+
+        search_flora.send_keys("Mint")
+        self.selenium.find_element_by_id("step1-submit").click()
+
+        plant_heading = self.selenium.find_element_by_class_name("roman").text
+        self.assertIn("Mint", plant_heading)
+
+        self.selenium.find_element_by_id("nickname").send_keys("Robert Plant")
+        self.selenium.find_element_by_id("room").send_keys("Sunroom")
+        self.selenium.find_element_by_id("thingspeak-id").send_keys("1193747")
+        self.selenium.find_element_by_id("step2-submit").click()
+
+        self.assertIn("Confirm Your Plant", self.selenium.page_source)
+
+        self.selenium.find_element_by_id("step3-submit").click()
+
+        self.assertIn("Robert Plant", self.selenium.page_source)
+
         self.selenium.close()

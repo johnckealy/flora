@@ -2,6 +2,7 @@
   <div class="q-pa-md">
     <div class="q-gutter-md row">
       <q-select
+        for="search-flora"
         outlined
         rounded
         :value="model"

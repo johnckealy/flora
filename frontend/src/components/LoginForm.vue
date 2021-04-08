@@ -6,6 +6,7 @@
 
     <q-form @submit="onSubmit" class="q-gutter-md">
       <q-input
+        for="email-input"
         v-model="email"
         label="Email"
         lazy-rules="ondemand"
@@ -16,6 +17,7 @@
       />
 
       <q-input
+        for="password-input"
         v-model="password"
         label="Password"
         type="password"
@@ -35,6 +37,7 @@
 
       <div>
         <q-btn
+          id="submit-login"
           class="q-ml-md full-width q-py-xs q-mx-auto"
           type="submit"
           color="primary"
