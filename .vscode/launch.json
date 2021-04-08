@@ -34,7 +34,7 @@
             "request": "launch",
             "module": "pytest",
             "args": [
-                "${workspaceFolder}/api/tests/integration_tests/test_authentication.py"
+                "${workspaceFolder}/api/tests/integration_tests/test_basic_flow.py"
             ],
             "envFile": "${workspaceFolder}/env/.env.dev",
         },

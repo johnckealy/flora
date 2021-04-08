@@ -29,6 +29,8 @@ class AuthTest(LiveServerTestCase):
 
 
     def test_basic_flow(self):
+        """The basic flow involves logging in and creating a
+        new device entry."""
         self.selenium.get(self.base_url)
         login_btn = self.selenium.find_element_by_id('login-button')
         login_btn.click()
@@ -45,7 +47,7 @@ class AuthTest(LiveServerTestCase):
             EC.presence_of_element_located((By.TAG_NAME, "h6")))
         self.assertIn("Hi Guest", h6_element.text)
 
-
+        # create a new device entry
         self.selenium.get(self.base_url + '/add-plants')
         self.assertIn("Find your plant", self.selenium.page_source)
 
