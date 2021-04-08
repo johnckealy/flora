@@ -46,7 +46,7 @@ class AuthTest(LiveServerTestCase):
         h6_element = WebDriverWait(self.selenium, 30).until(
             EC.presence_of_element_located((By.TAG_NAME, "h6")))
 
-        self.selenium.implicitly_wait(5)
+        self.selenium.implicitly_wait(10)
         self.assertIn("Hi Guest", h6_element.text)
 
         # create a new device entry
