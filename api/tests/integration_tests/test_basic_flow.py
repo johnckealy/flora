@@ -54,7 +54,7 @@ class AuthTest(LiveServerTestCase):
         self.assertIn("Find your plant", self.selenium.page_source)
 
         search_flora = WebDriverWait(self.selenium, 10).until(
-            EC.presence_of_element_located((By.ID, "search-flora")))
+            EC.element_to_be_clickable((By.ID, "search-flora")))
 
         search_flora.send_keys("Mint")
         self.selenium.find_element_by_id("step1-submit").click()
