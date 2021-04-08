@@ -19,7 +19,7 @@ class AuthTest(LiveServerTestCase):
 
 
     def test_login_page(self):
-        self.selenium.get(os.environ.get('ORIGIN_URL'))
+        self.selenium.get(self.base_url, 'https://flora.johnkealy.com')
         login_btn = self.selenium.find_element_by_id('login-button')
         login_btn.click()
         self.assertIn("Don\'t have an account", self.selenium.page_source)
