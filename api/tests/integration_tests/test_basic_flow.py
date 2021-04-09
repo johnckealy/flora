@@ -53,10 +53,10 @@ class AuthTest(LiveServerTestCase):
         self.selenium.get(self.base_url + '/add-plants')
         self.assertIn("Find your plant", self.selenium.page_source)
 
+        self.selenium.implicitly_wait(5)
+
         search_flora = WebDriverWait(self.selenium, 10).until(
             EC.presence_of_element_located((By.ID, "search-flora")))
-
-        self.selenium.implicitly_wait(5)
 
         search_flora.send_keys("Mint")
         self.selenium.find_element_by_id("step1-submit").click()
