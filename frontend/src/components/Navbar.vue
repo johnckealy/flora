@@ -65,6 +65,7 @@ export default {
     async logout() {
       try {
         await this.$auth.logout();
+        this.$store.commit("setdemo", {});
         this.$q.notify({ message: "Successfully logged out" });
         this.$router.push("/");
       } catch {

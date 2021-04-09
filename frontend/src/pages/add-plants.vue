@@ -338,6 +338,7 @@ export default {
           timeout: 3000,
         });
         this.$auth.logout();
+        this.$store.commit("setdemo", {});
         this.$router.push('/')
         return;
       }
