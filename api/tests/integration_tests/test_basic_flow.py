@@ -16,7 +16,7 @@ class AuthTest(LiveServerTestCase):
         self.base_url = os.environ.get('ORIGIN_URL', 'https://flora.johnkealy.com')
         if os.environ.get('ENVIRONMENT') == 'dev':
             options.binary_location = '/usr/bin/brave-browser'
-        options.headless = True
+        # options.headless = True
         options.add_argument('ignore-certificate-errors')
         self.selenium = webdriver.Chrome(options = options)
 
@@ -60,7 +60,7 @@ class AuthTest(LiveServerTestCase):
         expansion_element.click()
 
         radio_elements = WebDriverWait(self.selenium, 30).until(
-            EC.presence_of_element_located((By.CLASS_NAME, "q-radio")))
+            EC.presence_of_all_elements_located((By.CLASS_NAME, "q-radio")))
 
         radio_elements[2].click()
         self.selenium.implicitly_wait(20)
