@@ -62,6 +62,7 @@ class AuthTest(LiveServerTestCase):
         radio_elements = WebDriverWait(self.selenium, 30).until(
             EC.presence_of_all_elements_located((By.CLASS_NAME, "q-radio")))
 
+        self.selenium.implicitly_wait(20)
         radio_elements[2].click()
         self.selenium.implicitly_wait(20)
 
