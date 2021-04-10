@@ -16,7 +16,7 @@ class AuthTest(LiveServerTestCase):
         self.base_url = os.environ.get('ORIGIN_URL', 'https://flora.johnkealy.com')
         if os.environ.get('ENVIRONMENT') == 'dev':
             options.binary_location = '/usr/bin/brave-browser'
-        # options.headless = True
+        options.headless = True
         options.add_argument('ignore-certificate-errors')
         self.selenium = webdriver.Chrome(options = options)
 
