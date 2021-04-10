@@ -44,7 +44,7 @@ class AuthTest(LiveServerTestCase):
         self.selenium.find_element_by_id('password-input').send_keys("secret")
         self.selenium.find_element_by_id('submit-login').click()
 
-        h6_element = WebDriverWait(self.selenium, 30).until(
+        WebDriverWait(self.selenium, 30).until(
             EC.presence_of_element_located((By.TAG_NAME, "h6")))
 
         self.selenium.implicitly_wait(20)
@@ -53,8 +53,11 @@ class AuthTest(LiveServerTestCase):
         self.selenium.get(self.base_url + '/add-plants')
         self.assertIn("Find your plant", self.selenium.page_source)
 
+        expansion_element = WebDriverWait(self.selenium, 30).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "q-item__label")))
 
-        self.selenium.find_element_by_class_name('q-item__label').click()
+        expansion_element.click()
+
         self.selenium.find_elements_by_class_name('q-radio')[2].click()
         self.selenium.implicitly_wait(20)
 
