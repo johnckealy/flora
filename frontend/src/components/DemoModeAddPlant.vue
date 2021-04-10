@@ -58,7 +58,7 @@ export default {
           type: "demo",
           message: this.message3,
           closeBtn: false,
-          timeout: 2000,
+          timeout: 5000,
         });
       }
     },

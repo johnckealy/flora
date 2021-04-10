@@ -2,7 +2,7 @@
     "model": "plants.device",
     "pk": "ed8db267-d801-4186-bb2a-81dd650cda6d",
     "fields": {
-        "nickname": "Plantly",
+        "nickname": "Robert Plant",
         "room": "Sunroom",
         "thingspeak_id": "1193747",
         "airtable_plant_id": "rec3cOSSgiOvt1JPF",

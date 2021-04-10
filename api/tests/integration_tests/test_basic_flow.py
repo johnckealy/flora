@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 
 import os
 
@@ -46,18 +47,16 @@ class AuthTest(LiveServerTestCase):
         h6_element = WebDriverWait(self.selenium, 30).until(
             EC.presence_of_element_located((By.TAG_NAME, "h6")))
 
-        self.selenium.implicitly_wait(10)
-        self.assertIn("Hi Guest", h6_element.text)
+        self.selenium.implicitly_wait(20)
 
         # create a new device entry
         self.selenium.get(self.base_url + '/add-plants')
         self.assertIn("Find your plant", self.selenium.page_source)
 
 
-        search_flora = WebDriverWait(self.selenium, 10).until(
-            EC.presence_of_element_located((By.ID, "search-flora")))
-        self.selenium.implicitly_wait(10)
-        self.selenium.find_element_by_id("search-flora").send_keys("Mint")
+        self.selenium.find_element_by_class_name('q-item__label').click()
+        self.selenium.find_elements_by_class_name('q-radio')[2].click()
+        self.selenium.implicitly_wait(20)
 
         self.selenium.find_element_by_id("step1-submit").click()
 
@@ -65,7 +64,7 @@ class AuthTest(LiveServerTestCase):
             EC.presence_of_element_located((By.CLASS_NAME, "roman")))
 
         plant_heading = roman_text.text
-        self.assertIn("Mint", plant_heading)
+        self.assertIn("Generic High-Light Plant", plant_heading)
 
         self.selenium.find_element_by_id("nickname").send_keys("Robert Plant")
         self.selenium.find_element_by_id("room").send_keys("Sunroom")
