@@ -56,6 +56,7 @@ class AuthTest(LiveServerTestCase):
         expansion_element = WebDriverWait(self.selenium, 30).until(
             EC.presence_of_element_located((By.CLASS_NAME, "q-item__label")))
 
+        self.selenium.implicitly_wait(20)
         expansion_element.click()
 
         radio_elements = WebDriverWait(self.selenium, 30).until(
