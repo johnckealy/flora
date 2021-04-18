@@ -16,7 +16,7 @@ class AuthTest(LiveServerTestCase):
     def setUp(self) -> None:
         options = Options()
         self.base_url = os.environ.get(
-            'ORIGI_URL', 'https://flora.johnkealy.com')
+            'ORIGIN_URL', 'https://flora.johnkealy.com')
         if os.environ.get('ENVIRONMENT') == 'dev':
             options.binary_location = '/usr/bin/brave-browser'
         options.headless = True
