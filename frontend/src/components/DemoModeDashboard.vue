@@ -31,7 +31,7 @@ export default {
       any plants that need attention. You can also see \
       the activity history to the right.",
       "Okay, let's try adding a plant! On the top right \
-      of the screen, click the user (this is 'Guest' in \
+      of the screen, click the user (this is 'Demo User' in \
       demo mode.) Next, click 'Add a Plant'",
     ],
     messageIndex: 0,
